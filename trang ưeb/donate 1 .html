@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donate Ủng Hộ Dự Án - Hoang Chiou</title>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; color: #1e293b; line-height: 1.5; position: relative; }
+
+/* NÚT MUA VẬT LIỆU LIÊN HỆ GÓC TRÊN BÊN PHẢI */
+.top-contact { position: absolute; top: 15px; right: 20px; font-size: 13px; font-weight: bold; background: #0068ff; color: white; padding: 8px 14px; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 10px rgba(0, 104, 255, 0.2); transition: all 0.2s ease; z-index: 100; }
+.top-contact:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 104, 255, 0.3); filter: brightness(1.1); }
+
+.container { max-width: 680px; margin: 0 auto; padding: 60px 20px 40px 20px; }
+.logo { text-align: center; margin-bottom: 25px; }
+.logo a { text-decoration: none; display: inline-block; }
+.logo img { width: 110px; height: 110px; object-fit: contain; border-radius: 50%; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s; }
+.logo img:hover { transform: scale(1.05); }
+.logo h1 { font-size: 24px; letter-spacing: 1px; color: #1e293b; font-weight: 800; }
+.my-id-tag { font-size: 13px; color: #64748b; margin-top: 5px; font-weight: bold; background: #e2e8f0; display: inline-block; padding: 3px 10px; border-radius: 20px; }
+
+/* BANNER CÓ CÀI LINK YOUTUBE */
+.banner { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; text-align: center; padding: 35px 20px; border-radius: 24px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.15); cursor: pointer; transition: all 0.2s ease; text-decoration: none; display: block; }
+.banner:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(79, 70, 229, 0.25); filter: brightness(1.05); }
+.banner h1 { font-size: 28px; margin-bottom: 8px; color: white; }
+.banner p { font-size: 15px; opacity: 0.9; color: white; }
+
+.card { background: white; border-radius: 24px; padding: 30px 25px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); border: 1px solid rgba(0, 0, 0, 0.02); }
+.card h2 { font-size: 20px; margin-bottom: 20px; text-align: center; color: #1e293b; font-weight: 700; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 6px; color: #475569; font-size: 14px; }
+.form-group input, .form-group textarea { width: 100%; padding: 14px 16px; border: 1px solid #cbd5e1; border-radius: 14px; font-size: 16px; outline: none; transition: all 0.2s; background: #f8fafc; }
+.form-group input:focus, .form-group textarea:focus { border-color: #4f46e5; background: #fff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+.form-group input:disabled { background: #cbd5e1 !important; color: #64748b; cursor: not-allowed; }
+.quick-amounts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+
+.amount-btn { background: #f1f5f9; border: 1px solid #e2e8f0; padding: 10px; border-radius: 10px; font-weight: 600; font-size: 13px; color: #475569; cursor: pointer; transition: all 0.2s ease; }
+.amount-btn:hover { background: #e2e8f0; color: #1e293b; transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+.btn-submit { width: 100%; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; border: none; padding: 16px; border-radius: 14px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2); transition: all 0.2s ease; }
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3); filter: brightness(1.05); }
+
+#qrBlock { display: none; text-align: center; margin-top: 25px; padding-top: 25px; border-top: 2px dashed #e2e8f0; }
+#qrBlock img { width: 100%; max-width: 240px; border-radius: 20px; border: 1px solid #e2e8f0; padding: 8px; background: #fff; margin-bottom: 15px; }
+.progress-bar { width: 100%; height: 6px; background: #e2e8f0; border-radius: 10px; margin-bottom: 15px; overflow: hidden; position: relative; }
+.progress-fill { height: 100%; width: 0%; background: #4f46e5; }
+
+.btn-verify { width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; border: none; background: #e2e8f0; color: #94a3b8; pointer-events: none; transition: all 0.2s ease; }
+.btn-verify.active { background: #16a34a; color: white; pointer-events: auto; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.2); cursor: pointer; }
+.btn-verify.active:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+.leaderboard-item { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 12px 16px; margin-bottom: 10px; border-radius: 14px; font-weight: 600; border: 1px solid #f1f5f9; }
+.player-info { display: flex; align-items: center; gap: 10px; }
+.player-text { display: flex; flex-direction: column; }
+.player-msg { font-size: 12px; color: #64748b; font-weight: 400; }
+.amount { color: #4f46e5; font-weight: 700; }
+
+.status-tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: bold; display: inline-block; margin-top: 3px; }
+.status-tag.approved { background: #dcfce7; color: #16a34a; }
+
+#donatePopup { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-70px); background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(10px); border: 1px solid #e2e8f0; padding: 16px 28px; border-radius: 50px; box-shadow: 0 20px 40px rgba(0,0,0,0.12); z-index: 1000; font-weight: bold; color: #1e293b; text-align: center; opacity: 0; transition: all 0.4s; }
+#donatePopup.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* HÌNH NHÂN VẬT GÓC PHẢI */
+.corner-character { position: fixed; bottom: 20px; right: 20px; width: 120px; cursor: pointer; transition: transform 0.3s ease, filter 0.2s; z-index: 500; }
+.corner-character:hover { transform: scale(1.08) rotate(3deg); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15)); }
+@media (max-width: 768px) { .corner-character { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- Đổi tên nút liên hệ ở góc -->
+<a href="https://zalo.me/0344685438" target="_blank" class="top-contact">🛒 Mua vật liệu liên hệ Ad</a>
+
+<div id="donatePopup"></div>
+<div class="container">
+    <div class="logo">
+        <!-- Logo gắn link Youtube -->
+        <a href="https://youtube.com/@hoangchiou25" target="_blank">
+            <img src="lonhanvat.png" alt="Logo">
+        </a>
+        <h1>HOANG CHIOU</h1>
+        <div class="my-id-tag" id="myIdDisplay">ID của bạn: Đang tải...</div>
+    </div>
+    
+    <!-- Banner gắn link Youtube -->
+    <a href="https://youtube.com/@hoangchiou25" target="_blank" class="banner">
+        <h1>🎬 Ủng Hộ Dự Án Hoạt Hình</h1>
+        <p>Cảm ơn mọi sự đóng góp của mọi người ❤️</p>
+    </a>
+    
+    <div class="card" id="donate-zone">
+        <h2 id="formTitle">💖 Gửi Tặng Quyên Góp</h2>
+        <div class="form-group"><label for="donatorName">Tên hoặc Biệt danh của bạn:</label><input type="text" id="donatorName" placeholder="Ví dụ: Fan cứng..."></div>
+        <div class="form-group">
+            <label for="donateAmount">Số tiền muốn ủng hộ (đ) - Từ 5K đến 10 Triệu:</label><input type="number" id="donateAmount" placeholder="Nhập số tiền..." min="5000" max="10000000">
+            <div class="quick-amounts">
+                <button class="amount-btn" onclick="setQuickAmount(20000)">20K</button>
+                <button class="amount-btn" onclick="setQuickAmount(50000)">50K</button>
+                <button class="amount-btn" onclick="setQuickAmount(100000)">100K</button>
+                <button class="amount-btn" onclick="setQuickAmount(200000)">200K</button>
+            </div>
+        </div>
+        <div class="form-group"><label for="donatorMsg">Lời nhắn (Tùy chọn):</label><textarea id="donatorMsg" rows="2" placeholder="Chúc dự án sớm thành công..."></textarea></div>
+        <button class="btn-submit" id="btnSubmitForm">Xác Nhận Ủng Hộ & Hiện QR</button>
+        
+        <div id="qrBlock">
+            <p style="font-weight: bold; margin-bottom: 10px; color: #4f46e5;">Vui lòng thực hiện quét mã trên ứng dụng ngân hàng:</p>
+            <div><img src="qrviettinbank.jpg" alt="Mã QR Chuyển Khoản Tĩnh"></div>
+            <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
+            <button class="btn-verify" id="btnVerifyDonate">Vui lòng đợi 20 giây để hệ thống nhận...</button>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2 style="font-size: 16px; color:#4f46e5; text-align:left; margin-bottom:15px; border-bottom:1px solid #f1f5f9; padding-bottom:8px;">🕒 LỊCH SỬ DONATE GẦN ĐÂY CỦA BẠN</h2>
+        <div id="historyList"></div>
+    </div>
+    
+    <div class="card social" style="display:flex;gap:15px;justify-content:center;">
+        <a class="btn-social youtube" style="background:#ff0000; color:white; text-decoration:none; padding:10px; border-radius:10px; text-align:center; width:50%; font-weight:bold; transition: transform 0.2s;" href="https://youtube.com/@hoangchiou25" target="_blank">📺 YouTube</a>
+        <a class="btn-social tiktok" style="background:#000000; color:white; text-decoration:none; padding:10px; border-radius:10px; text-align:center; width:50%; font-weight:bold; transition: transform 0.2s;" href="https://www.tiktok.com/@hong.chiou" target="_blank">🎵 TikTok</a>
+    </div>
+</div>
+
+<!-- Nhân vật ở góc gắn link Youtube -->
+<img src="nhanvatgocnghieng.png" class="corner-character" id="ytDecorativeBtn" alt="Character">
+
+<script>
+function setQuickAmount(amount) { document.getElementById('donateAmount').value = amount; }
+
+// Click vào nhân vật bay sang Youtube
+document.getElementById('ytDecorativeBtn').addEventListener('click', () => { window.open('https://youtube.com/@hoangchiou25', '_blank'); });
+
+let tempDonateData = null;
+const nameInput = document.getElementById('donatorName');
+
+// Tạo ID người dùng ngẫu nhiên lưu tại máy
+let myUniqueId = localStorage.getItem('user_donate_id');
+if(!myUniqueId) { 
+    myUniqueId = "USER-" + Math.floor(1000 + Math.random() * 9000); 
+    localStorage.setItem('user_donate_id', myUniqueId); 
+}
+document.getElementById('myIdDisplay').innerText = `ID của bạn: ${myUniqueId}`;
+
+// Khóa ô nhập tên nếu đã từng donate
+const savedName = localStorage.getItem('user_donate_name');
+if(savedName) {
+    nameInput.value = savedName;
+    nameInput.disabled = true;
+    document.getElementById('formTitle').innerText = `💖 Chào trở lại, ${savedName}!`;
+}
+
+// Click Xác Nhận -> Chạy Progress Bar 20 Giây
+document.getElementById('btnSubmitForm').addEventListener('click', () => {
+    const name = nameInput.value.trim() || "Mạnh Thường Quân"; 
+    const amount = parseInt(document.getElementById('donateAmount').value); 
+    const msg = document.getElementById('donatorMsg').value.trim();
+    
+    if (!amount || amount < 5000) { alert("Số tiền quyên góp tối thiểu là 5.000đ!"); return; }
+    if (amount > 10000000) { alert("Số tiền quyên góp tối đa là 10.000.000đ!"); return; }
+    
+    tempDonateData = { name, amount, message: msg };
+    
+    document.getElementById('btnSubmitForm').style.display = "none";
+    document.getElementById('qrBlock').style.display = "block"; 
+    
+    const pFill = document.getElementById('pFill'); 
+    pFill.style.transition = "none"; 
+    pFill.style.width = "0%"; 
+    setTimeout(() => { pFill.style.transition = "width 20s linear"; pFill.style.width = "100%"; }, 50);
+    
+    const btnV = document.getElementById('btnVerifyDonate'); 
+    btnV.className = "btn-verify"; 
+    btnV.innerText = "Vui lòng đợi 20 giây...";
+    
+    // Đúng 20 giây sau tự động cảm ơn và lưu lịch sử luôn không cần nhập mã
+    setTimeout(() => { 
+        btnV.className = "btn-verify active"; 
+        btnV.innerText = "Xác Nhận Thành Công!"; 
+        
+        processSuccessDonate();
+    }, 20000);
+});
+
+// Xử lý lưu lịch sử cục bộ và tung pháo hoa cảm ơn
+function processSuccessDonate() {
+    if(!localStorage.getItem('user_donate_name')) {
+        localStorage.setItem('user_donate_name', tempDonateData.name);
+        nameInput.disabled = true;
+        document.getElementById('formTitle').innerText = `💖 Chào trở lại, ${tempDonateData.name}!`;
+    }
+    
+    // Lưu lịch sử vào LocalStorage của máy họ
+    let localHistory = JSON.parse(localStorage.getItem('pure_local_history')) || [];
+    localHistory.unshift({
+        name: tempDonateData.name,
+        amount: tempDonateData.amount,
+        message: tempDonateData.message,
+        timestamp: new Date().getTime()
+    });
+    localStorage.setItem('pure_local_history', JSON.stringify(localHistory));
+    
+    // Hiệu ứng pháo hoa tung trời & thông báo cảm ơn
+    confetti({ particleCount: 180, spread: 85, origin: { y: 0.6 } });
+    showDonateNotification(tempDonateData.name, tempDonateData.amount.toLocaleString(), tempDonateData.message);
+    
+    setTimeout(() => {
+        alert(`🎉 Cảm ơn ${tempDonateData.name} đã quyên góp ủng hộ dự án!`);
+        
+        // Reset giao diện về ban đầu để có thể donate tiếp
+        document.getElementById('qrBlock').style.display = "none"; 
+        document.getElementById('btnSubmitForm').style.display = "block"; 
+        document.getElementById('donateAmount').value = ""; 
+        document.getElementById('donatorMsg').value = "";
+        
+        updateHistoryUI();
+    }, 500);
+}
+
+// In lịch sử của riêng họ ra màn hình (lưu giữ trong vòng 1 tháng)
+function updateHistoryUI() {
+    const localHistory = JSON.parse(localStorage.getItem('pure_local_history')) || [];
+    const oneMonthAgoLimit = new Date().getTime() - (30 * 24 * 60 * 60 * 1000);
+    
+    let html = "";
+    let hasData = false;
+
+    localHistory.forEach(item => {
+        if (item.timestamp >= oneMonthAgoLimit) {
+            hasData = true;
+            const dateStr = new Date(item.timestamp).toLocaleDateString('vi-VN');
+            html += `
+                <div class="leaderboard-item" style="background:#fff;">
+                    <div class="player-info">
+                        <span class="rank-icon">💸</span>
+                        <div class="player-text">
+                            <span><strong>${item.name}</strong> <span class="status-tag approved">✅ Đã gửi (${dateStr})</span></span>
+                            ${item.message ? `<span class="player-msg">💬 ${item.message}</span>` : ''}
+                        </div>
+                    </div>
+                    <span class="amount" style="color:#16a34a;">+${item.amount.toLocaleString()}đ</span>
+                </div>`;
+        }
+    });
+    
+    document.getElementById('historyList').innerHTML = hasData ? html : '<div style="text-align:center;color:#64748b;padding:10px;font-size:14px;">Bạn chưa thực hiện giao dịch ủng hộ nào gần đây.</div>';
+}
+
+function showDonateNotification(name, amount, msg) { 
+    const popup = document.getElementById("donatePopup"); 
+    popup.innerHTML = `<div>🎉 <strong>${name}</strong> đã ủng hộ <span style="color: #4f46e5">${amount}đ</span>!</div>${msg ? `<div style="font-size:12px;color:#64748b;font-weight:normal;margin-top:4px;">"${msg}"</div>` : ''}`; 
+    popup.classList.add("show"); 
+    setTimeout(() => { popup.classList.remove("show"); }, 6000); 
+}
+
+// Tự động tải danh sách lịch sử cũ nếu có khi mở trang web
+updateHistoryUI();
+</script>
+</body>
+</html>
